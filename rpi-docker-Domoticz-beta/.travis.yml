@@ -1,0 +1,10 @@
+#Domoticz beta
+
+sudo: required
+
+services:
+   - Docker
+
+before_install:
+   - docker build -t DavidTre07/domoticz-beta:latest --build-arg date=`date +%Y%m%d` .
+
