@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/DavidTre07/Docker.svg)](https://travis-ci.org/DavidTre07/Docker)
+
 # Docker for Domoticz Beta
 This Dockerfile will build a docker with a beta version of Domoticz
 
