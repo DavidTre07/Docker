@@ -1,6 +1,6 @@
 version: '3'
 networks:
-  proxy2:
+  proxy:
     driver: overlay
     
 services:
@@ -19,7 +19,7 @@ services:
         constraints:
           - node.role == manager
     networks:
-      - proxy2
+      - proxy
 
 
   domoticz:
@@ -36,5 +36,5 @@ services:
         - traefik.frontend.rule="Host:domotique, domotique.lan"
         - traefik.port=8080
     networks:
-      - proxy2
+      - proxy
 
