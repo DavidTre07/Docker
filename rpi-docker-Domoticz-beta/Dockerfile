@@ -3,14 +3,12 @@
 #
 
 FROM resin/rpi-raspbian
-
-MAINTAINER David Tre (david.tre07@gmail.com)
-
-ARG date
+ARG date=unknown
 
 LABEL version="1.0" \
       Author="David Tre (david.tre07@gmail.com)" \
-      Description="Domoticz Beta $date"
+      Maintainer="David Tre (david.tre07@gmail.com)" \
+      Description="Domoticz Beta"
 
 RUN apt-get update \
   && apt-get install -y apt-utils \
@@ -22,9 +20,9 @@ RUN apt-get update \
   && groupadd -r -g 1000 pi \
   && useradd -r -u 1000 -g 1000 pi
 
-#USER pi
+USER pi
 
-RUN cd /domoticz \
+RUN DATE=$date cd /domoticz \
   && wget -O domoticz.tgz "http://www.domoticz.com/download.php?channel=beta&type=release&system=linux&machine=armv7l" \
   && tar xvfz domoticz.tgz -C /domoticz \
   && rm domoticz.tgz

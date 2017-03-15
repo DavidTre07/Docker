@@ -15,7 +15,7 @@ If you already use Domoticz and you want to migrate to the docker version, just 
 
 ## Run the docker
 ```
-docker run --rm -p 8080:8080 -p 443:443 --name=Domoticz -v /docker/config/domoticz:/config:rw -v /docker/data/domoticz:/data:rw -v /etc/localtime:/etc/localtime:ro --device=/dev/ttyUSB0:/dev/ttyUSB0 davidtre07/domoticz-beta:latest
+docker run --rm -p 80:8080 -p 443:443 --name=Domoticz -v /docker/config/domoticz:/config:rw -v /docker/data/domoticz:/data:rw -v /etc/localtime:/etc/localtime:ro --device=/dev/ttyUSB0:/dev/ttyUSB0 davidtre07/domoticz-beta:latest
 ```
 
 ## Swarm
@@ -24,6 +24,12 @@ docker service create --replicas 1 --name Domoticz \
   --mount type=bind,source=/docker/config/domoticz,destination=/config \
   --mount type=bind,source=/docker/data/gcalcli,destination=/data \
   --mount type=bind,source=/etc/localtime,destination=/etc/localtime,ro \
-  --publish 8080:8080/tcp --publish 443:443/tcp \
+  --publish 80:8080/tcp --publish 443:443/tcp \
   davidtre07/domoticz-beta
+```
+
+##Swarm update
+```
+docker service update --publish-rm 8080 Domoticz
+docker service update --publish-add 80:8080 Domoticz
 ```
