@@ -86,7 +86,7 @@ services:
       - proxy
 
   nodeExporter:
-    image: davidtre07/node-exporter
+    image: davidtre07/node-exporter:0.14.0-rc.2
     command: -collector.procfs /host/proc -collector.sysfs /host/sys -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)" --collectors.enabled="conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs"
     network_mode: "host"
     ports:
@@ -100,5 +100,54 @@ services:
       labels:
         - traefik.enable=false
 
+  cadvisor:
+    image: braingamer/cadvisor-arm:latest
+    ports:
+      - "9200:8080"
+    volumes:
+      - /:/rootfs
+      - /var/run:/var/run
+      - /sys:/sys
+      - /var/lib/docker:/var/lib/docker
+    deploy:
+      mode: global
+      labels:
+        - traefik.enable=false
 
+
+  prometheus:
+    image: davidtre07/prometheus:1.5.2
+    ports:
+      - "9090:9090"
+    volumes:
+      - /docker/data/prometheus/:/prometheus
+      - /docker/config/prometheus/:/etc/prometheus
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - traefik.enable=false
+    networks:
+      - proxy
+
+  grafana:
+    image: fg2it/grafana-armhf:v4.1.2
+    volumes:
+      - /docker/data/grafana:/var/lib/grafana
+    environment:
+      - GF_DEFAULT_INSTANCE_NAME=rpi
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.type!=rpi1
+      labels:
+        - traefik.enable=true
+        - traefik.frontend.rule="Host:monitor, monitor.lan, mon, mon.lan"
+        - traefik.port=3000
+    networks:
+      - proxy
 
