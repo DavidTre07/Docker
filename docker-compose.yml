@@ -23,7 +23,7 @@ services:
 
 
   portainer:
-    image: portainer/portainer
+    image: davidtre07/portainer:1.12.1
     command: -H unix:///var/run/docker.sock --no-analytics
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
