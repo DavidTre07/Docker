@@ -138,6 +138,12 @@ services:
       - GF_DEFAULT_INSTANCE_NAME=rpi
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp.gmail.com:587
+      - GF_SMTP_USER=david.tre07@gmail.com
+      - GF_SMTP_PASSWORD=xxxxxxxx
+      - GF_SMTP_FROM_ADDRESS=david.tre07@gmail.com
+      - GF_SMTP_SKIP_VERIFY=false
     deploy:
       mode: replicated
       replicas: 1
