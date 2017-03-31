@@ -1,6 +1,6 @@
 # Create a Docker with youtube-dl
 
-#Build
+# Build
 docker build -t david07/youtube-dl:\`date +%Y%m%d\` -t david07/youtube-dl:latest .
 
 # Startup
