@@ -1,6 +1,9 @@
 #!/bin/bash
 
-VER=1.12.1
+if [ "x$1" != "x" ];then VER=$1
+else VER=1.12.2
+fi
+
 wget https://github.com/portainer/portainer/releases/download/$VER/portainer-$VER-linux-arm.tar.gz
 
 mkdir dd
