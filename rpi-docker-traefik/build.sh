@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VER=1.1.2
-#VER=1.2.0-rc2
+#VER=1.1.2
+VER=1.2.1
 
 wget https://github.com/containous/traefik/releases/download/v${TAG}/traefik_linux-arm
 chmod +x traefik_linux-arm
